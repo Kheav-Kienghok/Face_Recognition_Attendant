@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from PIL import Image, ImageTk
+# from process_webcam import processing_app
 
 class FaceRecognitionApp:
     def __init__(self):
@@ -49,7 +50,7 @@ class FaceRecognitionApp:
                            text = "Face Rec", 
                            font = ("Imprint MT Shadow", 50, "bold", "italic"), 
                            fill = "#A8F0F2")
-        canvas.create_text(1030, 130, 
+        canvas.create_text(1050, 130, 
                            text = "Attendant", 
                            font = ("Imprint MT Shadow", 50, "bold", "italic"), 
                            fill = "#A8F0F2")
@@ -72,16 +73,15 @@ class FaceRecognitionApp:
         text_title_1.grid(row = 0, column = 0, pady = 10, sticky = "wn")  
         
         text_title_2 = ctk.CTkLabel(right_frame,
-                                    text = " System", 
+                                    text = "- System", 
                                     font = ("Imprint MT Shadow", 52, "bold", "italic"),
                                     text_color = "#A8F0F2")
         text_title_2.grid(row = 0, column = 0, pady = 75, sticky = "wn") 
 
-
         # Three buttons 
         button1 = ctk.CTkButton(right_frame, 
                                 text = "Start Webcam", 
-                                font = ("Arial Rounded MT Bold", 16), 
+                                font = ("Arial Rounded MT Bold", 17, "bold"), 
                                 fg_color = "#004C6D",
                                 text_color = "#87CEEB",
                                 hover_color = "#003B53",
@@ -90,12 +90,12 @@ class FaceRecognitionApp:
                                 border_color = "#006D79", 
                                 width = 200, 
                                 height = 75, 
-                                command = self.start_recognition)
+                                command = self.start_webcam)
         button1.grid(row = 0, column = 0, rowspan = 2, columnspan = 2, pady = 50, sticky = "se")  
 
         button2 = ctk.CTkButton(right_frame, 
                                 text = "View Attendance", 
-                                font = ("Arial Rounded MT Bold", 16), 
+                                font = ("Arial Rounded MT Bold", 17, "bold"), 
                                 fg_color = "#004C6D",
                                 text_color = "#87CEEB",
                                 hover_color = "#003B53",
@@ -108,7 +108,7 @@ class FaceRecognitionApp:
         
         button3 = ctk.CTkButton(right_frame, 
                                 text = "Exit", 
-                                font = ("Arial Rounded MT Bold", 16), 
+                                font = ("Arial Rounded MT Bold", 17, "bold"), 
                                 fg_color = "#004C6D",
                                 text_color = "#87CEEB",
                                 hover_color = "#003B53", 
@@ -125,6 +125,17 @@ class FaceRecognitionApp:
 
     def run(self):
         self.app.mainloop()
+        
+    def start_webcam(self):
+        print("Starting the webcam....")
+        try:
+            self.app.withdraw()  
+            processing_app()  
+        except Exception as e:
+            print(f"Error in webcam processing: {e}")
+        finally:
+            self.app.deiconify()
+            print("Webcam process finished.")
 
 if __name__ == "__main__":
     face_recognition_app = FaceRecognitionApp()
