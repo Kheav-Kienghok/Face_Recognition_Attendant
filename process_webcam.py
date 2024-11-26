@@ -34,7 +34,7 @@ except FileNotFoundError:
     exit(1)
 
 # Threshold for "unknown" classification
-threshold = 0.7
+threshold = 0.8
 
 def processing_app():
     
@@ -53,7 +53,7 @@ def processing_app():
         rgb_img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
         gray_img = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         
-        faces = haarcascade.detectMultiScale(gray_img, 1.3, 5)  # Neighbors = 5 (increase will lead to less false positive)
+        faces = haarcascade.detectMultiScale(gray_img, 1.3, 6)  # Neighbors = 5 (increase will lead to less false positive)
         
         for x, y, w, h in faces:
             face_img = rgb_img[y:y+h, x:x+w]

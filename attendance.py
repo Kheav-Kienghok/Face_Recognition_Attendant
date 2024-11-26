@@ -45,8 +45,6 @@ def get_all_attendance():
     cursor = conn.execute(query)
     records = cursor.fetchall()
     
-    conn.close()
-    
     return records
 
 def get_specific_name(name):
@@ -55,8 +53,6 @@ def get_specific_name(name):
     try:
         cursor = conn.execute(query, (name,))
         records = cursor.fetchall()
-        
-        conn.close()
         
         return records
     except Exception as e:
@@ -69,11 +65,20 @@ def get_specific_date(date):
         cursor = conn.execute(query, (date,))
         records = cursor.fetchall()
         
-        conn.close()
-        
         return records
     except Exception as e:
         return f"Error fetching data for {date}: {e}"
+    
+def get_specific_name_and_date(name, date):
+    query = "SELECT * FROM attendance WHERE student_name = ? AND date = ?"
+    
+    try:
+        cursor = conn.execute(query, (name, date))
+        records = cursor.fetchall()
+        
+        return records
+    except Exception as e:
+        return f"Error fetching data for {name} on {date}: {e}"
 
 def check_attendance_exists(student_name, date):
     query = "SELECT * FROM attendance WHERE student_name = ? AND date = ?"
@@ -83,16 +88,16 @@ def check_attendance_exists(student_name, date):
     if result:
         return result[5]  
     
-    conn.close()
     return None  
-
 
 
 def check_and_mark_attendance(student_name, date):
     
     student_inf = {"Keanghok": "Male",
                    "Sna": "Male",
-                   "Dara": "Male"
+                   "Dara": "Male",
+                   "ROSÉ": "Female",
+                   "Bruno_Mars": "Male"
                    }
     
     existing_status = check_attendance_exists(student_name, date)
@@ -121,15 +126,16 @@ def check_and_mark_attendance(student_name, date):
 if __name__ == '__main__':
     initialize()
 
-    student_names = ['Keanghok', 'Dara', 'Sna']
-    current_date = datetime.now().strftime("%Y-%m-%d")
-
-    for student_name in student_names:
-        status = check_and_mark_attendance(student_name, current_date)
-        print(f"Student: {student_name}, Attendance Status: {status}")
+    # student_names = ['Keanghok', 'Dara', 'Sna']
+    # current_date = datetime.now().strftime("%Y-%m-%d")
+    
+    # for student_name in student_names:
+    #     status = check_and_mark_attendance(student_name, current_date)
+    #     print(f"Student: {student_name}, Attendance Status: {status}")
 
     attendance_records = get_all_attendance()
-    for record in attendance_records:
-        print(record)
+    print(attendance_records)
+    # for record in attendance_records:
+    #     print(record)
         
-    print(get_specific_name("Sna"))
+    # print(get_specific_name("Sna"))
