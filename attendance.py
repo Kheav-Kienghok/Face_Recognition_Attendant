@@ -134,8 +134,8 @@ if __name__ == '__main__':
     #     print(f"Student: {student_name}, Attendance Status: {status}")
 
     attendance_records = get_all_attendance()
-    print(attendance_records)
-    # for record in attendance_records:
-    #     print(record)
+    # print(attendance_records)
+    for record in attendance_records:
+        print(record)
         
     # print(get_specific_name("Sna"))

@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from PIL import Image, ImageTk
 from process_webcam import processing_app
-from attendance import get_all_attendance, get_specific_name_and_date, get_specific_name, get_specific_date 
+from attendance import get_all_attendance, get_specific_name_and_date, get_specific_name, get_specific_date, initialize
 
 class FaceRecognitionApp:
     def __init__(self):
@@ -92,7 +92,7 @@ class FaceRecognitionApp:
                                 border_color = "#006D79", 
                                 width = 200, 
                                 height = 75, 
-                                command = self.start_webcam)
+                                command = lambda: self.start_webcam())
         button1.grid(row = 0, column = 0, rowspan = 2, columnspan = 2, pady = 50, sticky = "se")  
 
         button2 = ctk.CTkButton(right_frame, 
@@ -303,5 +303,6 @@ class FaceRecognitionApp:
         self.app.deiconify()
 
 if __name__ == "__main__":
+    initialize()
     face_recognition_app = FaceRecognitionApp()
     face_recognition_app.run()
